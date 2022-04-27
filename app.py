@@ -79,9 +79,12 @@ def bottles(name=None):
         new_bottle.save()
         return jsonify({"success": f'{new_bottle.name} created'})
     if request.method == 'DELETE':
-        deleted = Bottles.delete().where(Bottles.id == id)
-        deleted.execute()
-        return jsonify({"deleted": True})
+        if Bottles.name == name:
+            deleted = Bottles.delete().where(Bottles.name == name)
+            deleted.execute()
+            return jsonify({"deleted": "Something definitely got deleted."})
+        else:
+            return jsonify({"deleted": "Could not find"})
 
 
 app.run(port=9000, debug=True)
