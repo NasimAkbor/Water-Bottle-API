@@ -75,9 +75,13 @@ def bottles(name=None):
                 bottlesList.append(model_to_dict(bottle))
             return jsonify(bottlesList)
     if request.method == 'POST':
-        return 'GET request'
+        new_bottle = dict_to_model(Bottles, request.get_json())
+        new_bottle.save()
+        return jsonify({"success": f'{new_bottle.name} created'})
     if request.method == 'DELETE':
-        return 'GET request'
+        deleted = Bottles.delete().where(Bottles.id == id)
+        deleted.execute()
+        return jsonify({"deleted": True})
 
 
 app.run(port=9000, debug=True)
