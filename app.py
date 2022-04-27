@@ -1,4 +1,5 @@
 from peewee import *
+from flask import Flask
 
 db = PostgresqlDatabase('water_bottles', user='nasimakbor', password='12345',
                         host='localhost', port=5432)
@@ -51,3 +52,13 @@ Bottles(name="Badoit", size=24, unit="oz",
         sparkling=True, mineral_Count=533).save()
 Bottles(name="Gerolsteiner", size=750, unit="mL",
         sparkling=False, mineral_Count=665).save()
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return "This is the API root"
+
+
+app.run()
