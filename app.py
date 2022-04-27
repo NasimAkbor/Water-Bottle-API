@@ -1,5 +1,7 @@
+from crypt import methods
 from peewee import *
-from flask import Flask
+from flask import Flask, request, jsonify
+from playhouse.shortcuts import model_to_dict, dict_to_model
 
 db = PostgresqlDatabase('water_bottles', user='nasimakbor', password='12345',
                         host='localhost', port=5432)
@@ -61,4 +63,21 @@ def index():
     return "This is the API root"
 
 
-app.run()
+@app.route('/bottles/', methods=['GET', 'POST'])
+@app.route('/bottles/<name>', methods=['GET', 'PUT', 'DELETE'])
+def bottles(name=None):
+    if request.method == 'GET':
+        if name:
+            return jsonify(model_to_dict(Bottles.get(Bottles.name == name)))
+        else:
+            bottlesList = []
+            for bottle in Bottles.select():
+                bottlesList.append(model_to_dict(bottle))
+            return jsonify(bottlesList)
+    if request.method == 'POST':
+        return 'GET request'
+    if request.method == 'DELETE':
+        return 'GET request'
+
+
+app.run(port=9000, debug=True)
