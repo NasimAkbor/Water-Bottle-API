@@ -29,3 +29,5 @@ Second model usage
 
 Displaying and getting information from both models
 
+Heroku Deployment
+
