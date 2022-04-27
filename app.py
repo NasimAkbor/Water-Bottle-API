@@ -60,7 +60,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "This is the API root"
+    return "This is the API root, type /bottles to see the list of bottles"
 
 
 @app.route('/bottles/', methods=['GET', 'POST'])
