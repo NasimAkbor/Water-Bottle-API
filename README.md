@@ -23,3 +23,9 @@ NOTE** Only GET commands will work in browser. To do the rest you manipulate the
 | POST | /bottles| Creates a bottles water based on JSON submitted |
 | PUT | /bottles/Name | Update a bottle water file |
 | DELETE | /bottles/name | Delete a Bottle Water object of the given name |
+
+## Coming additions:
+Second model usage
+
+Displaying and getting information from both models
+

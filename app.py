@@ -74,17 +74,19 @@ def bottles(name=None):
             for bottle in Bottles.select():
                 bottlesList.append(model_to_dict(bottle))
             return jsonify(bottlesList)
+    if request.method == 'PUT':
+        req = request.get_json()
+        query = Bottles.update(req).where(Bottles.name == name)
+        query.execute()
+        return jsonify({"updated": f'{name} got updated'})
     if request.method == 'POST':
         new_bottle = dict_to_model(Bottles, request.get_json())
         new_bottle.save()
         return jsonify({"success": f'{new_bottle.name} created'})
     if request.method == 'DELETE':
-        if Bottles.name == name:
-            deleted = Bottles.delete().where(Bottles.name == name)
-            deleted.execute()
-            return jsonify({"deleted": "Something definitely got deleted."})
-        else:
-            return jsonify({"deleted": "Could not find"})
+        deleted = Bottles.delete().where(Bottles.name == name)
+        deleted.execute()
+        return jsonify({"deleted": "Something definitely got deleted."})
 
 
 app.run(port=9000, debug=True)
